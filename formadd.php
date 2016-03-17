@@ -49,7 +49,7 @@
 		<div class="panel panel-default panel-primary">
 			<div class="panel-heading"><h5>Nice Word</h5></div>
 			<div class="panel-body">
-				Hidup itu seperti naik sepeda, agar tetap seimbang, kau harus terus bergerak
+				Hidup itu seperti naik sepeda, agar tetap seimbang, kau harus terus bergerak 
 			</div>
 			<div class="panel-footer"><i>Albert Einstein</i></div>
 		</div>
