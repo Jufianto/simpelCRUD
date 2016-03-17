@@ -2,15 +2,14 @@
 require_once "config.php";
 require_once "class.pegawai.php";
 $peg = new pegawai($conn);
-
+$date = date('d-m-Y');
 if(isset($_POST['add']))
 {
 	
-	$idpeg =$_POST['idpeg'];
 	$namepeg =$_POST['namepeg'];
 	$alamat =$_POST['alamat'];
 	$tglpeg =$_POST['tglpeg'];
-
+	$idpeg = $peg->generateId($date);
 	if($peg->create($idpeg,$namepeg,$alamat,$tglpeg))
 	{
 		header('location:index.php?success');
@@ -41,10 +40,10 @@ if(isset($_POST['add']))
 	<div class="container">
 	<div class="col-md-6">
 		<form action="" method="POST">
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="idpeg">ID Pegawai</label>
 				<input type="text" id="idpeg" name="idpeg" class="form-control">
-			</div>
+			</div> -->
 			<div class="form-group">
 				<label for="nmpeg">Nama Pegawai</label>
 				<input type="text" id="nmpeg"  name="namepeg" class="form-control">
