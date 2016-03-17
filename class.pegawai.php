@@ -39,6 +39,15 @@ class pegawai
         return $id = $years.$month.$date.$rand1.$rand;
 	}
 
+	public function getAllData()
+	{
+		$jfsql	= "SELECT * FROM pegawai";
+		$jfqu	= $this->db->prepare($jfsql);
+		$jfqu->execute();
+		$jfData	= $jfqu->fetchAll(PDO::FETCH_OBJ);
+		return $jfData;
+	}
+
 
 
 

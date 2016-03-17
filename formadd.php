@@ -22,22 +22,9 @@ if(isset($_POST['add']))
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Simple OOP CRUD</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bs.min.css">
-    <link rel="stylesheet" href="css/datepicker.css">
-    <style>
-    	body{
-    		padding-top: 3em;
-    	}
-    </style>	
-</head>
-<body>
+<?php include "header.php"; ?>
 	<div class="container">
+	<div class="row">
 	<div class="col-md-6">
 		<form action="" method="POST">
 			<!-- <div class="form-group">
@@ -46,7 +33,7 @@ if(isset($_POST['add']))
 			</div> -->
 			<div class="form-group">
 				<label for="nmpeg">Nama Pegawai</label>
-				<input type="text" id="nmpeg"  name="namepeg" class="form-control">
+				<input type="text" id="nmpeg"  name="namepeg" class="form-control" required>
 			</div>
 			<div class="form-group">
 				<label for="almtpeg">Alamat Pegawai</label>
@@ -55,7 +42,7 @@ if(isset($_POST['add']))
 			<div class="form-group">
 				<label for="tglpeg">Tanggal Lahir Pegawai</label>
 				<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="datepicker">
-                <input type='text' class="form-control" name="tglpeg" >
+                <input type='text' class="form-control" name="tglpeg" required >
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar">
                     </span>
@@ -78,20 +65,9 @@ if(isset($_POST['add']))
 			<div class="panel-footer"><i>Albert Einstein</i></div>
 		</div>
 	</div>
+	</div>
 		
 
 
 	</div>
-	<script type="text/javascript">
-        $(function () {
-            $('#datepicker').datepicker({
-               format: 'dd/mm/yyyy',
-    			startDate: '-3d'
-            });
-        });
-    </script>
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-</body>
-</html>
+
