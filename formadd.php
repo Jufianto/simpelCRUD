@@ -1,3 +1,28 @@
+<?php
+require_once "config.php";
+require_once "class.pegawai.php";
+$peg = new pegawai($conn);
+
+if(isset($_POST['add']))
+{
+	
+	$idpeg =$_POST['idpeg'];
+	$namepeg =$_POST['namepeg'];
+	$alamat =$_POST['alamat'];
+	$tglpeg =$_POST['tglpeg'];
+
+	if($peg->create($idpeg,$namepeg,$alamat,$tglpeg))
+	{
+		header('location:index.php?success');
+	}else{
+		header('location:index.php?failure');
+	}
+}
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +40,7 @@
 <body>
 	<div class="container">
 	<div class="col-md-6">
-		<form action="">
+		<form action="" method="POST">
 			<div class="form-group">
 				<label for="idpeg">ID Pegawai</label>
 				<input type="text" id="idpeg" name="idpeg" class="form-control">
@@ -30,8 +55,8 @@
 			</div>
 			<div class="form-group">
 				<label for="tglpeg">Tanggal Lahir Pegawai</label>
-				<div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy" id="datepicker">
-                <input type='text' class="form-control" />
+				<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="datepicker">
+                <input type='text' class="form-control" name="tglpeg" >
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar">
                     </span>
@@ -39,7 +64,7 @@
             </div>
 			</div>
 
-			<button class="btn btn-primary" type="submit">Tambah Data</button>
+			<button class="btn btn-primary" type="submit" name="add">Tambah Data</button>
 			<button class="btn btn-default" type="reset">Reset</button>
 
 
