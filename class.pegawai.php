@@ -48,6 +48,45 @@ class pegawai
 		return $jfData;
 	}
 
+	public function removeOne($id)
+	{
+		$jfsql	="DELETE FROM pegawai where id_peg =:id";
+		$jfqu	= $this->db->prepare($jfsql);
+		if ($jfqu->execute(array(":id"=> $id)))
+		{
+			header('location:index.php?removed');
+		}else{
+			header('location:index.php?re');	
+		}
+	}
+
+	public function getOneData($id)
+	{
+		$jfsql	= "SELECT * FROM pegawai WHERE id_peg = :id";
+		$jfqu	= $this->db->prepare($jfsql);
+		$jfqu->execute(array(":id"=> $id));
+		$jfData = $jfqu->fetch(PDO::FETCH_OBJ);
+		return $jfData;
+	}
+
+	public function edit($id,$name,$alamat,$tglLahir)
+	{
+		try
+		{
+			$jfqu = $this->db->prepare("UPDATE pegawai SET nm_peg=:nmPeg,alamat=:alamat,birthdate=:birthDate WHERE id_peg=:idPeg ");
+			$jfqu->bindparam(":idPeg",$id);
+			$jfqu->bindparam(":nmPeg",$name);
+			$jfqu->bindparam(":alamat",$alamat);
+			$jfqu->bindparam(":birthDate",$tglLahir);
+			$jfqu->execute();	
+			return true;
+		}catch(PDOException $ex){
+			echo $ex->getMessage();
+			return false;
+		}
+		
+	}
+
 
 
 

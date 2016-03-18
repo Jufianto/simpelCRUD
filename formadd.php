@@ -12,7 +12,7 @@ if(isset($_POST['add']))
 	$idpeg = $peg->generateId($date);
 	if($peg->create($idpeg,$namepeg,$alamat,$tglpeg))
 	{
-		header('location:index.php?success');
+		header('location:index.php?inserted');
 	}else{
 		header('location:index.php?failure');
 	}
@@ -70,4 +70,4 @@ if(isset($_POST['add']))
 
 
 	</div>
-
+<?php include "footer.php";
