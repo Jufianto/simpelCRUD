@@ -11,16 +11,18 @@ class pegawai
 	/*
 		make function insert data to database
 	*/
-	public function create($id,$name,$alamat,$tglLahir)
+	public function create($id,$name,$alamat,$tglLahir,$jk,$foto)
 	{
 		try
 		{
 			// sql to insert 
-			$jfqu = $this->db->prepare("INSERT INTO pegawai (id_peg,nm_peg,alamat,birthdate) VALUES(:idPeg,:nmPeg,:alamat,:birthDate)");
+			$jfqu = $this->db->prepare("INSERT INTO pegawai (id_peg,nm_peg,alamat,birthdate,jk,foto) VALUES(:idPeg,:nmPeg,:alamat,:birthDate,:jk,:foto)");
 			$jfqu->bindparam(":idPeg",$id);
 			$jfqu->bindparam(":nmPeg",$name);
 			$jfqu->bindparam(":alamat",$alamat);
 			$jfqu->bindparam(":birthDate",$tglLahir);
+			$jfqu->bindparam(":jk",$jk);
+			$jfqu->bindparam(":foto",$foto);
 			// execute the sql
 			$jfqu->execute();	
 			return true;
@@ -96,6 +98,36 @@ class pegawai
 			return false;
 		}
 		
+	}
+
+	/* Function to Upload File*/
+
+	public function uploadFile($id)
+	{
+            $targetDir  = 'foto/';               /* Target Directory*/
+            $targetFile = $targetDir . $id;     /* Nama file yang akan disimpan */
+            $jfData     = $peg->getOneData($id);
+		 $namaFoto = basename($_FILES["fileToUpload"]["name"]);
+		if ($jfData == false)						/* jika data pegawai belum ada */
+            {
+                
+                  $splitData 	= explode('.',$namaFoto);
+                  $newName		= $id.$splitData[1];
+                  $targetFile 	= $targetDir . $newName;
+
+                
+            }else
+            {
+                echo "string";
+                echo $jfData->foto;
+                echo "1";
+                print_r($jfData);
+            }
+	}
+
+	public function generateNameFoto($namaFoto)
+	{
+
 	}
 
 

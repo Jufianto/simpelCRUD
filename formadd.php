@@ -26,7 +26,7 @@ if(isset($_POST['add']))
 	<div class="container">
 	<div class="row">
 	<div class="col-md-6">
-		<form action="" method="POST">
+		<form action="" method="POST" enctype="multipart/form-data">
 			<!-- <div class="form-group">
 				<label for="idpeg">ID Pegawai</label>
 				<input type="text" id="idpeg" name="idpeg" class="form-control">
@@ -40,6 +40,11 @@ if(isset($_POST['add']))
 				<textarea required class="form-control" id="almtpeg" rows="3" name="alamat"></textarea>
 			</div>
 			<div class="form-group">
+				<label class="input-group">Jenis Kelamin</label>
+				<label for ="jeniskel" class="radion-inline"> <input id="jeniskel" type="radio" name="jk" checked="true" value="L"> Laki Laki </label>
+				<label for ="jeniskelP" class="radion-inline"> <input id="jeniskelP" type="radio" name="jk" value="P"> Perempuan </label>
+			</div>
+			<div class="form-group">
 				<label for="tglpeg">Tanggal Lahir Pegawai</label>
 				<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="datepicker">
                 <input type='text' class="form-control" name="tglpeg" required >
@@ -49,6 +54,22 @@ if(isset($_POST['add']))
                 </span>
             </div>
 			</div>
+
+			<div class="form-group">
+			<label for="upload">Tanggal Lahir Pegawai</label>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                    	<!-- javascrpit on change untuk mengeset nama yang di dapat dari input -->
+                        Browse<input id="upload" type="file" onchange='$("#upload-file-info").val($(this).val());'>
+                    </span>
+                </span>
+                <input type="text" class="form-control" id="upload-file-info">
+            </div>
+            <!-- <span class="help-block">
+                Try selecting one or more files and watch the feedback
+            </span> -->
+        </div>
 
 			<button class="btn btn-primary" type="submit" name="add">Tambah Data</button>
 			<button class="btn btn-default" type="reset">Reset</button>
