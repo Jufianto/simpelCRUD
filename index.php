@@ -4,22 +4,21 @@
  require_once "class.pegawai.php";
  $peg = new pegawai($conn);
 
-if(isset($_GET['rt']))
-{
-	echo $_GET['rt'];
-}
- if(isset($_GET['remove']))
+ if(isset($_GET['remove'])) /* If on url have remove or if data was succes remove*/
  {
- 	$idmd5 = $_GET['remove'];
+ 	$idmd5 = $_GET['remove']; /* encrypt id with md5*/
  	echo $idmd5 . "<br>";
- 	foreach ($peg->getAllData() as $jf) {
+ 	/* Search Id and if data was find remove data*/
+ 	foreach ($peg->getAllData() as $jf) {		
  		if ($idmd5 == md5($jf->id_peg))
  		{
  			$peg->removeOne($jf->id_peg);
  		} 	
  	}
  }
- if(isset($_GET['inserted']))
+
+ 	/* If insert was succes make notification */
+ if(isset($_GET['inserted']))		
  {
  	echo "
  	<div class='container'>
@@ -29,6 +28,8 @@ if(isset($_GET['rt']))
   	<strong>Success!</strong> Data Telah Di Insert
 	</div>
 	</div> ";
+
+	/* If data was deleted make notification*/
  }else if (isset($_GET['removed']))
  {
  	echo "
@@ -66,7 +67,11 @@ if(isset($_GET['rt']))
 					<th>Tanggal Lahir</th>
 					<th colspan="2">Action</th>
 				</tr>
-				<?php 
+
+
+				<?php
+
+				/* Show all data from database */ 
 				$no =1;
 				foreach ($peg->getAllData() as $jf) {
 				?>	

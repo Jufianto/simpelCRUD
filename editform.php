@@ -1,18 +1,18 @@
 <?php
-require_once "config.php";
+require_once "config.php";			/* Include file config.php*/
 require_once "class.pegawai.php";
-$peg = new pegawai($conn);
-$date = date('d-m-Y');
-$idpeg = $_GET['idpeg'];
-$jfData = $peg->getOneData($idpeg);
-if(isset($_POST['edit']))
+$peg = new pegawai($conn);			/* Make Class pegawai as Object to be access */
+$date = date('d-m-Y'); 				/* Get data on php with format day - month - years*/
+$idpeg = $_GET['idpeg'];			/* Get id pegawai from link url send */
+$jfData = $peg->getOneData($idpeg);	/* Get One Data*/
+if(isset($_POST['edit']))			/* If button edit was click or submit*/
 {
 	
-	$namepeg =$_POST['namepeg'];
+	$namepeg =$_POST['namepeg'];	/* Take data by POST send */
 	$alamat =$_POST['alamat'];
 	$tglpeg =$_POST['tglpeg'];
 	
-	if($peg->edit($idpeg,$namepeg,$alamat,$tglpeg))
+	if($peg->edit($idpeg,$namepeg,$alamat,$tglpeg)) /* If edit succsess */
 	{
 		header('location:index.php?updated');
 	}else{
