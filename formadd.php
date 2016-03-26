@@ -6,11 +6,13 @@ $date = date('d-m-Y');
 if(isset($_POST['add']))
 {
 	
-	$namepeg =$_POST['namepeg'];
-	$alamat =$_POST['alamat'];
-	$tglpeg =$_POST['tglpeg'];
-	$idpeg = $peg->generateId($date);
-	if($peg->create($idpeg,$namepeg,$alamat,$tglpeg))
+	$namepeg 	=$_POST['namepeg'];
+	$alamat 	=$_POST['alamat'];
+	$tglpeg 	=$_POST['tglpeg'];
+	$jk 		=$_POST['jk'];
+	$idpeg 		=$peg->generateId($date);
+	$nameFoto	=$peg->generateNameFoto(basename($_FILES["foto"]["name"]),$idpeg);
+	if($peg->create($idpeg,$namepeg,$alamat,$tglpeg,$jk,$nameFoto))
 	{
 		header('location:index.php?inserted');
 	}else{
@@ -46,8 +48,8 @@ if(isset($_POST['add']))
 			</div>
 			<div class="form-group">
 				<label for="tglpeg">Tanggal Lahir Pegawai</label>
-				<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="datepicker">
-                <input type='text' class="form-control" name="tglpeg" required >
+				<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="datepicker" required>
+                <input type='text' class="form-control" name="tglpeg" required>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar">
                     </span>
@@ -56,20 +58,20 @@ if(isset($_POST['add']))
 			</div>
 
 			<div class="form-group">
-			<label for="upload">Tanggal Lahir Pegawai</label>
+			<label for="upload">Foto</label>
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn btn-primary btn-file">
                     	<!-- javascrpit on change untuk mengeset nama yang di dapat dari input -->
-                        Browse<input id="upload" type="file" onchange='$("#upload-file-info").val($(this).val());'>
+                        Browse<input id="upload" type="file" onchange='$("#upload-file-info").val($(this).val());' required name="foto">
                     </span>
                 </span>
-                <input type="text" class="form-control" id="upload-file-info">
+                <input type="text" class="form-control" id="upload-file-info" readonly>
             </div>
             <!-- <span class="help-block">
                 Try selecting one or more files and watch the feedback
             </span> -->
-        </div>
+        	</div>
 
 			<button class="btn btn-primary" type="submit" name="add">Tambah Data</button>
 			<button class="btn btn-default" type="reset">Reset</button>

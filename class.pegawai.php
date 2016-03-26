@@ -24,8 +24,11 @@ class pegawai
 			$jfqu->bindparam(":jk",$jk);
 			$jfqu->bindparam(":foto",$foto);
 			// execute the sql
-			$jfqu->execute();	
+			if ($this->uploadFile($id)) {
+			$jfqu->execute();
 			return true;
+			}
+				
 		}catch(PDOException $ex){
 			// if can not  print this code error
 			echo $ex->getMessage();
@@ -82,17 +85,22 @@ class pegawai
 	}
 
 	/* Function Edit data on database*/
-	public function edit($id,$name,$alamat,$tglLahir)
+	public function edit($id,$name,$alamat,$tglLahir,$jk)
 	{
 		try
 		{
-			$jfqu = $this->db->prepare("UPDATE pegawai SET nm_peg=:nmPeg,alamat=:alamat,birthdate=:birthDate WHERE id_peg=:idPeg ");
+			$jfqu = $this->db->prepare("UPDATE pegawai SET nm_peg=:nmPeg,alamat=:alamat,birthdate=:birthDate, jk=:jk WHERE id_peg=:idPeg ");
 			$jfqu->bindparam(":idPeg",$id);
 			$jfqu->bindparam(":nmPeg",$name);
 			$jfqu->bindparam(":alamat",$alamat);
 			$jfqu->bindparam(":birthDate",$tglLahir);
-			$jfqu->execute();	
+			$jfqu->bindparam(":jk",$jk);
+
+
+			if ($this->uploadFile($id)) { 			/* Jika upload file berhasil*/
+			$jfqu->execute();
 			return true;
+			}
 		}catch(PDOException $ex){
 			echo $ex->getMessage();
 			return false;
@@ -104,30 +112,64 @@ class pegawai
 
 	public function uploadFile($id)
 	{
-            $targetDir  = 'foto/';               /* Target Directory*/
-            $targetFile = $targetDir . $id;     /* Nama file yang akan disimpan */
-            $jfData     = $peg->getOneData($id);
-		 $namaFoto = basename($_FILES["fileToUpload"]["name"]);
+            $targetDir  = 'foto/';               		 /* Target Directory*/		 	 
+            $jfData     = $this->getOneData($id);
+		 	$namaFoto = basename($_FILES["foto"]["name"]);
+		 	$uploadOk = 0;
+		 	if($jfData) { $targetFile 	= $targetDir . $jfData->foto; }
+		 	$newFoto 	= $this->generateNameFoto($namaFoto,$id);
 		if ($jfData == false)						/* jika data pegawai belum ada */
             {
                 
-                  $splitData 	= explode('.',$namaFoto);
-                  $newName		= $id.$splitData[1];
-                  $targetFile 	= $targetDir . $newName;
+                
+                $targetFile 	= $targetDir . $newFoto;		/* Membuat nama foto baru*/
+              	$uploadOk 	= 1;
 
                 
-            }else
+            }else									/* Jika data pegawai telah ada */
             {
-                echo "string";
-                echo $jfData->foto;
-                echo "1";
-                print_r($jfData);
+                if(file_exists($targetFile))
+                {
+                	unlink($targetFile);			/* Hapus foto yang telah ada */
+                }
+				
+				$targetFile	= $targetDir . $newFoto;
+				
+					$uploadOk	= 1;
+				
             }
+            $imageFileType = pathinfo($targetFile,PATHINFO_EXTENSION);  /* Get info extension file*/
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
+            {
+    			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    			$uploadOk = 0;
+			}
+
+			if ($uploadOk == 0) {
+   			 	echo "Sorry, your file was not uploaded.";
+				// if everything is ok, try to upload file
+			} else {
+				/* Start Upload */
+    			if (move_uploaded_file($_FILES["foto"]["tmp_name"], $targetFile)) {
+
+         			return true;
+    			} else {
+        			echo "Sorry, there was an error uploading your file.";
+    				return false;
+    			}
+			}			
+
+
+
+
 	}
 
-	public function generateNameFoto($namaFoto)
+	public function generateNameFoto($namaFoto,$id)
 	{
-
+		/* Memecahkan file dalam format " . " dan dibagi berdasarkan array*/
+		$splitData	= explode('.', $namaFoto);			
+		$newName	= "$id.$splitData[1]";
+		return $newName;
 	}
 
 
